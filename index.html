@@ -11,7 +11,23 @@
   <main>
     <div id="user-list"></div>
     <div id="user-info"></div>
+    <form id="form" class="hidden">
+      <input type="text" name="name" placeholder="Name">
+      <input type="password" name="password" minlength="4" maxlength="8" placeholder="password">
+      <input type="number" name="age" min="18" max="120" placeholder="age">
+      <input type="email" name="email" placeholder="email">
+      <input type="tel" name="phoneNumber" placeholder="phone number">
+      <input type="text" name="cardNumber" placeholder="bankcard number">
+      <input type="button" class="btn-save" value="Save">
+    </form>
   </main>
+  <div id="remove-user-modal" class="modal">
+    <div class="modal-content">
+      <p id="modal-text"></p>
+      <button id="btn-confirm" class="btn-modal-style confirm">Confirm</button>
+      <button id="btn-cancel" class="btn-modal-style cancel" >Cancel</button>
+    </div>
+  </div>
 
   <script src="./js/Person.js"></script>
   <script src="./js/data.js"></script>

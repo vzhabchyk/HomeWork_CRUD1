@@ -4,10 +4,10 @@ let selectedUser;
 
 function creatButton(text) {
   const btnView = document.createElement('button');
-    btnView.classList.add('btn-view', 'btn-style');
-    btnView.innerText = text;
-    btnView.setAttribute('data-action', text);
-    return btnView;
+  btnView.classList.add('btn-view', 'btn-style');
+  btnView.innerText = text;
+  btnView.setAttribute('data-action', text);
+  return btnView;
 }
 
 function showUserInfo (user, index) {
@@ -30,8 +30,16 @@ function showUserInfo (user, index) {
 
 function removeUser (index) {
   const usersList = getUsersList();
-  const removeConfirmation = confirm(`Are you sure you want to delete ${usersList[index].name}?`);
-  if (removeConfirmation) {
+
+  document.getElementById('modal-text').innerText = `
+  Are you sure you want to delete ${usersList[index].name}?
+  `;
+
+  const modal = document.getElementById('remove-user-modal');
+  modal.style.display = 'block';
+
+  const btnConfirm = document.getElementById('btn-confirm');
+  btnConfirm.onclick = function () {
     usersList.splice(index, 1);
     localStorage.setItem('users', JSON.stringify(usersList));
     document.getElementById('user-list').innerHTML = '';
@@ -41,7 +49,18 @@ function removeUser (index) {
       document.getElementById('user-info').innerHTML = '';
       selectedUser = null;
     }
+    modal.style.display = 'none';
   }
+
+  const btnCancel = document.getElementById('btn-cancel');
+  btnCancel.onclick = function () {
+    modal.style.display = 'none';
+  }
+}
+
+function editUserInfo(user, index) {
+  document.getElementById('form').classList.remove('hidden');
+  
 }
 
 function showUsers (usersList) {
@@ -60,6 +79,8 @@ function showUsers (usersList) {
         showUserInfo(usersList[i], i);
       }  else if (targetAction === 'Remove') {
         removeUser (i);
+      } else if (targetAction === 'Edit') {
+        editUserInfo(usersList[i], i);
       }
     };
     userItem.appendChild(creatButton('View'));
