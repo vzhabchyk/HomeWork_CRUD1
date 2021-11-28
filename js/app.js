@@ -1,6 +1,7 @@
 'use strict'; 
 
 let selectedUser;
+const form = document.forms.editUserForm;
 
 function creatButton(text) {
   const btnView = document.createElement('button');
@@ -59,8 +60,27 @@ function removeUser (index) {
 }
 
 function editUserInfo(user, index) {
-  document.getElementById('form').classList.remove('hidden');
-  
+  const formElem = document.getElementById('form');
+  formElem.classList.remove('hidden');
+  for (let property in user) {
+    form.elements[property].value = user[property];
+  }
+
+  const usersList = getUsersList();
+
+  const btnSave = document.getElementsByClassName('btn-save')[0];
+  btnSave.onclick = function () {
+    for (let i = 0; i < form.elements.length; i++) {
+      if (form.elements[i].type === 'button') {
+        continue;
+      } 
+      usersList[index][form.elements[i].name] = form.elements[i].value;
+    }
+    localStorage.setItem('users', JSON.stringify(usersList));
+    document.getElementById('user-list').innerHTML = '';
+    formElem.classList.add('hidden');
+    showUsers(usersList);
+  };
 }
 
 function showUsers (usersList) {
@@ -100,5 +120,7 @@ function getUsersList () {
 
 const usersList = getUsersList();
 showUsers(usersList);
+
+
 
 

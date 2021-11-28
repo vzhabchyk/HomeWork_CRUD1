@@ -11,13 +11,25 @@
   <main>
     <div id="user-list"></div>
     <div id="user-info"></div>
-    <form id="form" class="hidden">
-      <input type="text" name="name" placeholder="Name">
-      <input type="password" name="password" minlength="4" maxlength="8" placeholder="password">
-      <input type="number" name="age" min="18" max="120" placeholder="age">
-      <input type="email" name="email" placeholder="email">
-      <input type="tel" name="phoneNumber" placeholder="phone number">
-      <input type="text" name="cardNumber" placeholder="bankcard number">
+    <form id="form" class="hidden" name="editUserForm">
+      <span class="form-text">User name:</span>
+      <input type="text" name="name" class="form-item">
+      
+      <span class="form-text">Password:</span>
+      <input type="password" name="password" minlength="4" maxlength="8" class="form-item">
+      
+      <span class="form-text">Age:</span>
+      <input type="number" name="age" min="18" max="120" class="form-item">
+      
+      <span class="form-text">Email:</span>
+      <input type="email" name="email" class="form-item">
+      
+      <span class="form-text">Phone number:</span>
+      <input type="tel" name="phoneNumber" class="form-item">
+      
+      <span class="form-text">Bankcard number:</span>
+      <input type="text" name="cardNumber" class="form-item">
+      
       <input type="button" class="btn-save" value="Save">
     </form>
   </main>

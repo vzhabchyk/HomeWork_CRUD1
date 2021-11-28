@@ -1,3 +1,7 @@
+body {
+  background-color: #d9fad9;
+}
+
 .user-item {
   height: 30px;
 }
@@ -16,6 +20,11 @@
   border-radius: 4px;
   border: none;
   cursor: pointer;
+}
+
+.btn-style:hover,
+.btn-style:focus {
+  background-color: rgb(178, 244, 250);
 }
 
 input {
@@ -76,4 +85,27 @@ input {
 
 .cancel {
   background-color: rgb(42, 146, 243);
+}
+
+.form-item {
+  margin-bottom: 5px;
+}
+
+.form-text {
+  font-family: monospace;
+  color: rgb(68, 64, 64);
+}
+
+.btn-save {
+  color: #fefefe;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgb(44, 172, 32);
+  cursor: pointer;
+}
+
+.btn-save:hover,
+.btn-save:focus {
+  background-color: rgb(50, 116, 45);
 }
