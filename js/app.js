@@ -70,15 +70,18 @@ function editUserInfo(user, index) {
   const usersList = getUsersList();
 
   btnSave.onclick = function () {
-    for (let i = 0; i < form.elements.length; i++) {
-      if (form.elements[i].type === 'button') {
-        continue;
-      } 
-      usersList[index][form.elements[i].name] = form.elements[i].value;
+    const formValid = validateForm (form.elements);
+    if (formValid) {
+      for (let i = 0; i < form.elements.length; i++) {
+        if (form.elements[i].type === 'button') {
+          continue;
+        } 
+        usersList[index][form.elements[i].name] = form.elements[i].value;
+      }
+      localStorage.setItem('users', JSON.stringify(usersList));
+      formElem.classList.add('hidden');
+      showUsers(usersList);
     }
-    localStorage.setItem('users', JSON.stringify(usersList));
-    formElem.classList.add('hidden');
-    showUsers(usersList);
   };
 }
 
@@ -132,21 +135,54 @@ btnCreateUser.addEventListener('click', function() {
   }
 
   btnSave.onclick = function () {
-    const user = new Person (
-      form.name.value, 
-      form.password.value, 
-      form.age.value, 
-      form.email.value, 
-      form.phoneNumber.value, 
-      form.cardNumber.value
-    );
-    const usersList = getUsersList();
-    usersList.push(user);
-    localStorage.setItem('users', JSON.stringify(usersList));
-    formElem.classList.add('hidden');
-    showUsers(usersList);
+    const formValid = validateForm (form.elements);
+    if (formValid) {
+      const user = new Person (
+        form.name.value, 
+        form.password.value, 
+        form.age.value, 
+        form.email.value, 
+        form.phoneNumber.value, 
+        form.cardNumber.value
+      );
+      const usersList = getUsersList();
+      usersList.push(user);
+      localStorage.setItem('users', JSON.stringify(usersList));
+      formElem.classList.add('hidden');
+      showUsers(usersList);
+    }
   }
 })
+
+function validateForm (formElements) {
+  const error = document.getElementsByClassName('error')[0];
+  if (!formElements.name.value.match(/[A-Z]{1}[a-z]+/)) {
+    error.innerText = 'Name should contain only letters!';
+    return false;
+  }
+  if (!formElements.age.value.match(/\d{2}/)) {
+    error.innerText = 'Age is not valid!'
+    return false;
+  }
+  if (!formElements.email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/)) {
+    error.innerText = 'Email is not valid!'
+    return false;
+  }
+  if (!formElements.phoneNumber.value.match(/^\+380[0-9]{9}$/)) {
+    error.innerText = 'Phone number is not valid!'
+    return false;
+  }
+  if (!formElements.cardNumber.value.match(/^[0-9]{16}/)) {
+    error.innerText = 'Bankcard number is not valid!'
+    return false;
+  }
+  if (!formElements.password.value || formElements.password.value.length < 4) {
+    error.innerText = 'Password is not valid!'
+    return false;
+  }
+  error.innerText = '';
+  return true;
+}
 
 
 
