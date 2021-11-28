@@ -2,6 +2,9 @@
 
 let selectedUser;
 const form = document.forms.editUserForm;
+const btnSave = document.getElementsByClassName('btn-save')[0];
+const formElem = document.getElementById('form');
+const btnCreateUser = document.getElementById('add-user');
 
 function creatButton(text) {
   const btnView = document.createElement('button');
@@ -43,7 +46,6 @@ function removeUser (index) {
   btnConfirm.onclick = function () {
     usersList.splice(index, 1);
     localStorage.setItem('users', JSON.stringify(usersList));
-    document.getElementById('user-list').innerHTML = '';
     showUsers(usersList);
     
     if (selectedUser === index) {
@@ -60,7 +62,6 @@ function removeUser (index) {
 }
 
 function editUserInfo(user, index) {
-  const formElem = document.getElementById('form');
   formElem.classList.remove('hidden');
   for (let property in user) {
     form.elements[property].value = user[property];
@@ -68,7 +69,6 @@ function editUserInfo(user, index) {
 
   const usersList = getUsersList();
 
-  const btnSave = document.getElementsByClassName('btn-save')[0];
   btnSave.onclick = function () {
     for (let i = 0; i < form.elements.length; i++) {
       if (form.elements[i].type === 'button') {
@@ -77,7 +77,6 @@ function editUserInfo(user, index) {
       usersList[index][form.elements[i].name] = form.elements[i].value;
     }
     localStorage.setItem('users', JSON.stringify(usersList));
-    document.getElementById('user-list').innerHTML = '';
     formElem.classList.add('hidden');
     showUsers(usersList);
   };
@@ -85,6 +84,8 @@ function editUserInfo(user, index) {
 
 function showUsers (usersList) {
   const usersListContainer = document.getElementById('user-list');
+  usersListContainer.innerHTML = '';
+
   for (let i = 0; i < usersList.length; i++) {
     const userItem = document.createElement('div');
     userItem.classList.add('user-item');
@@ -120,6 +121,32 @@ function getUsersList () {
 
 const usersList = getUsersList();
 showUsers(usersList);
+
+btnCreateUser.addEventListener('click', function() {
+  formElem.classList.remove('hidden');
+  for (let i = 0; i < form.elements.length; i++) {
+    if (form.elements[i].type === 'button') {
+      continue;
+    } 
+    form.elements[i].value = '';
+  }
+
+  btnSave.onclick = function () {
+    const user = new Person (
+      form.name.value, 
+      form.password.value, 
+      form.age.value, 
+      form.email.value, 
+      form.phoneNumber.value, 
+      form.cardNumber.value
+    );
+    const usersList = getUsersList();
+    usersList.push(user);
+    localStorage.setItem('users', JSON.stringify(usersList));
+    formElem.classList.add('hidden');
+    showUsers(usersList);
+  }
+})
 
 
 
